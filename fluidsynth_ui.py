@@ -26,7 +26,7 @@ from PIL import ImageFont
 
 def test_text(oled):
     font = ImageFont.load_default()
-    font2 = ImageFont.truetype('../fonts/mobitec.ttf', 6)
+    font2 = ImageFont.truetype('fonts/mobitec.ttf', 8)
     with canvas(oled) as draw:
         draw.text((0, 0), "Line 1....", font=font2, fill=255)
         draw.text((0, 7), "Line 2....", font=font2, fill=255)
@@ -38,7 +38,7 @@ def test_text(oled):
         draw.text((0, 55), "Line 8....", font=font2, fill=255)
 
 def main():
-    oled = ssd1306(port=0, address=0x3C)
+    oled = ssd1306(port=3, address=0x3C)
     test_text(oled)
 
 if __name__ == "__main__":
