@@ -8,7 +8,9 @@
 
 import os
 import sys
-import fluidsynth
+import fluidsynth_backend
+import sys
+from time import sleep
 
 if os.name != 'posix':
     sys.exit('platform not supported')
@@ -37,9 +39,36 @@ def test_text(oled):
         draw.text((0, 47), "Line 7....", font=font2, fill=255)
         draw.text((0, 55), "Line 8....", font=font2, fill=255)
 
+def test_menu():
+    from menu import Menu
+    from rotary import Rotary
+
+    m = Menu([
+        "First line",
+        "A second menu option",
+        "Now to the third",
+        "On to the forth",
+        "Follow the fifth",
+        "Support the sixth"
+    ])
+
+    r = Rotary(**{'menu': m, 'clk': 29, 'dt': 31, 'btn': 37})
+
+    if len(sys.argv) > 1:
+        if sys.argv[1] == 'clear':
+            m.blank(True)
+        else:
+            m.set_highlight(int(sys.argv[1]))
+            m.render()
+    else:
+        m.render()
+
+    while True:
+        sleep(1)
+
 def main():
     oled = ssd1306(port=3, address=0x3C)
-    test_text(oled)
+    test_menu()
 
 if __name__ == "__main__":
     main()
