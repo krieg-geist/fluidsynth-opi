@@ -3,7 +3,7 @@ import threading
 
 from oled.device import ssd1306
 from oled.render import canvas
-
+from PIL import ImageFont, ImageDraw
 
 class Menu:
 
@@ -14,8 +14,6 @@ class Menu:
 
         self.oled = ssd1306(port=3, address=0x3C)
 
-        self.image = Image.new('1', (self.oled.width, self.oled.height))
-        self.draw = canvas(self.oled)
         self.font = ImageFont.truetype('fonts/mobitec.ttf', 8)
 
         self.renderThread = None
@@ -38,7 +36,8 @@ class Menu:
         self.set_highlight(0 if self.highlightOption is None else self.highlightOption + by)
 
     def blank(self, draw=False):
-        self.draw.rectangle((-1, -1, self.oled.width+1, self.oled.height+1), outline=0, fill=0)
+        with canvas(self.oled) as draw:
+            draw.rectangle((-1, -1, self.oled.width+1, self.oled.height+1), outline=0, fill=0)
 
     def render(self):
         if self.renderThread is None or not self.renderThread.isAlive():
@@ -62,11 +61,12 @@ class Menu:
             end = start + self.rowCount
 
         # draw the menu options
-        top = 0
-        for x in range(start, end):
-            fill = 1
-            if self.highlightOption is not None and self.highlightOption == x:
-                self.draw.rectangle([0, top, self.oled.width, top + 11], outline=0, fill=1)
-                fill = 0
-            self.draw.text((3, top + 1), self.options[x], font=self.font, fill=fill)
-            top += 10
+        with canvas(self.oled) as draw:
+            top = 0
+            for x in range(start, end):
+                fill = 1
+                if self.highlightOption is not None and self.highlightOption == x:
+                    self.draw.rectangle([0, top, self.oled.width, top + 11], outline=0, fill=1)
+                    fill = 0
+                draw.text((3, top + 1), self.options[x], font=self.font, fill=fill)
+                top += 10

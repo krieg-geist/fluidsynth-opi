@@ -50,7 +50,7 @@ def test_menu():
         "Support the sixth"
     ])
 
-    r = Rotary(**{'menu': m, 'clk': 29, 'dt': 31, 'btn': 37})
+    r = Rotary(**{'menu': m, 'clk': 11, 'dt': 13, 'btn': 15})
 
     if len(sys.argv) > 1:
         if sys.argv[1] == 'clear':

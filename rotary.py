@@ -1,4 +1,5 @@
-import OPi.GPIO
+import orangepi.zero
+import OPi.GPIO as GPIO
 
 class Rotary:
 
@@ -11,7 +12,7 @@ class Rotary:
         self.btnLastState = None
         self.clkLevel = 0
         self.dtLevel = 0
-        GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(orangepi.zero.BOARD)
         GPIO.setup(self.clk, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(self.dt, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(self.btn, GPIO.IN, pull_up_down=GPIO.PUD_UP)
