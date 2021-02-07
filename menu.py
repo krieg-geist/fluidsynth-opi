@@ -39,9 +39,6 @@ class Menu:
 
     def blank(self, draw=False):
         self.draw.rectangle((-1, -1, self.oled.width+1, self.oled.height+1), outline=0, fill=0)
-        if draw:
-            self.oled.image(self.image)
-            self.oled.display()
 
     def render(self):
         if self.renderThread is None or not self.renderThread.isAlive():
@@ -51,8 +48,6 @@ class Menu:
     def __render(self):
         self.blank()
         self.__build()
-        self.oled.image(self.image)
-        self.oled.display()
 
     def __build(self):
         # adjust the start/end positions of the range
