@@ -12,13 +12,10 @@ class Menu:
         self.highlightOption = None
         self.rowCount = 6
 
-        oled = ssd1306(port=3, address=0x3C)
-        self.oled.begin()
-        self.oled.clear()
-        self.oled.display()
+        self.oled = ssd1306(port=3, address=0x3C)
 
         self.image = Image.new('1', (self.oled.width, self.oled.height))
-        self.draw = ImageDraw.Draw(self.image)
+        self.draw = canvas(self.oled)
         self.font = ImageFont.truetype('fonts/mobitec.ttf', 8)
 
         self.renderThread = None

@@ -16,8 +16,6 @@ if os.name != 'posix':
     sys.exit('platform not supported')
 import psutil
 
-fs = fluidsynth.Synth()
-
 from datetime import datetime
 from oled.device import ssd1306, sh1106
 from oled.render import canvas

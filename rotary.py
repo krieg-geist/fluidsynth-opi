@@ -1,4 +1,4 @@
-from OPi.GPIO import GPIO
+import OPi.GPIO
 
 class Rotary:
 
